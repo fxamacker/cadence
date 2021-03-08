@@ -6701,7 +6701,7 @@ func NewAuthAccountValue(
 	}
 
 	return &CompositeValue{
-		QualifiedIdentifier: sema.AuthAccountType.QualifiedString(),
+		QualifiedIdentifier: sema.AuthAccountType.QualifiedIdentifier(),
 		Kind:                common.CompositeKindStructure,
 		Fields:              fields,
 		ComputedFields:      computedFields,
@@ -6776,7 +6776,7 @@ func NewPublicAccountValue(
 	}
 
 	return &CompositeValue{
-		QualifiedIdentifier: sema.PublicAccountType.QualifiedString(),
+		QualifiedIdentifier: sema.PublicAccountType.QualifiedIdentifier(),
 		Kind:                common.CompositeKindStructure,
 		Fields:              fields,
 		ComputedFields:      computedFields,
