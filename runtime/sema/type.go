@@ -1004,15 +1004,15 @@ type IntType struct{}
 func (*IntType) IsType() {}
 
 func (*IntType) String() string {
-	return "Int"
+	return IntTypeName
 }
 
 func (*IntType) QualifiedString() string {
-	return "Int"
+	return IntTypeName
 }
 
 func (*IntType) ID() TypeID {
-	return "Int"
+	return IntTypeName
 }
 
 func (*IntType) Equal(other Type) bool {
@@ -5276,15 +5276,15 @@ type AddressType struct{}
 func (*AddressType) IsType() {}
 
 func (*AddressType) String() string {
-	return "Address"
+	return AddressTypeName
 }
 
 func (*AddressType) QualifiedString() string {
-	return "Address"
+	return AddressTypeName
 }
 
 func (*AddressType) ID() TypeID {
-	return "Address"
+	return AddressTypeName
 }
 
 func (*AddressType) Equal(other Type) bool {

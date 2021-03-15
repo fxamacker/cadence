@@ -18,16 +18,10 @@
 
 package sema
 
-// AnyStructType represents the top type of all non-resource types
-//
-var AnyStructType = &SimpleType{
-	Name:          AnyStructTypeName,
-	QualifiedName: AnyStructTypeName,
-	TypeID:        AnyStructTypeName,
-	IsInvalid:     false,
-	IsResource:    false,
-	// The actual storability of a value is checked at run-time
-	Storable:             true,
-	Equatable:            false,
-	ExternallyReturnable: true,
-}
+const StringTypeName = "String"
+const BoolTypeName = "Bool"
+const AddressTypeName = "Address"
+const IntTypeName = "Int"
+const AnyTypeName = "Any"
+const AnyResourceTypeName = "AnyResource"
+const AnyStructTypeName = "AnyStruct"
