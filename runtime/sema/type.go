@@ -4272,6 +4272,7 @@ type CompositeType struct {
 	nestedTypes           *StringTypeOrderedMap
 	ContainerType         Type
 	EnumRawType           Type
+	hasComputedMembers    bool
 }
 
 func (t *CompositeType) ExplicitInterfaceConformanceSet() *InterfaceSet {
@@ -4354,6 +4355,9 @@ func (*CompositeType) IsInvalidType() bool {
 }
 
 func (t *CompositeType) IsStorable(results map[*Member]bool) bool {
+	if t.hasComputedMembers {
+		return false
+	}
 
 	// Only structures, resources, and enums can be stored
 
@@ -4384,6 +4388,9 @@ func (t *CompositeType) IsStorable(results map[*Member]bool) bool {
 }
 
 func (t *CompositeType) IsExternallyReturnable(results map[*Member]bool) bool {
+	if t.hasComputedMembers {
+		return false
+	}
 
 	// Only structures, resources, and enums can be stored
 
