@@ -5545,7 +5545,22 @@ func (v *CompositeValue) OwnerValue() OptionalValue {
 	address := AddressValue(*v.Owner)
 
 	return NewSomeValueOwningNonCopying(
-		NewPublicAccountValue(address, nil, nil, nil),
+		NewPublicAccountValue(
+			address,
+			func(interpreter *Interpreter) UInt64Value {
+				panic(errors.NewUnreachableError())
+			},
+			func() UInt64Value {
+				panic(errors.NewUnreachableError())
+			},
+			NewPublicAccountKeysValue(
+				NewHostFunctionValue(
+					func(invocation Invocation) Value {
+						panic(errors.NewUnreachableError())
+					},
+				),
+			),
+		),
 	)
 }
 
@@ -6653,7 +6668,7 @@ func NewAuthAccountValue(
 	fields.Set(sema.AuthAccountAddressField, address)
 	fields.Set(sema.AuthAccountAddPublicKeyField, addPublicKeyFunction)
 	fields.Set(sema.AuthAccountRemovePublicKeyField, removePublicKeyFunction)
-	fields.Set(sema.AuthAccountGetCapabilityField, accountGetCapabilityFunction(address, true))
+	fields.Set(sema.AuthAccountGetCapabilityField, accountGetCapabilityFunction(address))
 	fields.Set(sema.AuthAccountContractsField, contracts)
 	fields.Set(sema.AuthAccountKeysField, keys)
 
@@ -6702,7 +6717,7 @@ func NewAuthAccountValue(
 
 	return &CompositeValue{
 		QualifiedIdentifier: sema.AuthAccountType.QualifiedIdentifier(),
-		Kind:                common.CompositeKindStructure,
+		Kind:                sema.AuthAccountType.Kind,
 		Fields:              fields,
 		ComputedFields:      computedFields,
 		stringer:            stringer,
@@ -6711,7 +6726,6 @@ func NewAuthAccountValue(
 
 func accountGetCapabilityFunction(
 	addressValue AddressValue,
-	authorized bool,
 ) HostFunctionValue {
 
 	return NewHostFunctionValue(
@@ -6752,7 +6766,7 @@ func NewPublicAccountValue(
 
 	fields := NewStringValueOrderedMap()
 	fields.Set(sema.PublicAccountAddressField, address)
-	fields.Set(sema.PublicAccountGetCapacityField, accountGetCapabilityFunction(address, false))
+	fields.Set(sema.PublicAccountGetCapabilityField, accountGetCapabilityFunction(address))
 	fields.Set(sema.PublicAccountKeysField, keys)
 
 	// Computed fields
@@ -6777,7 +6791,7 @@ func NewPublicAccountValue(
 
 	return &CompositeValue{
 		QualifiedIdentifier: sema.PublicAccountType.QualifiedIdentifier(),
-		Kind:                common.CompositeKindStructure,
+		Kind:                sema.PublicAccountType.Kind,
 		Fields:              fields,
 		ComputedFields:      computedFields,
 		stringer:            stringer,
