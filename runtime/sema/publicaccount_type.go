@@ -53,7 +53,7 @@ var PublicAccountType = &SimpleType{
 					return NewPublicConstantFieldMember(
 						t,
 						identifier,
-						&UInt64Type{},
+						UInt64Type,
 						accountTypeStorageUsedFieldDocString,
 					)
 				},
@@ -64,7 +64,7 @@ var PublicAccountType = &SimpleType{
 					return NewPublicConstantFieldMember(
 						t,
 						identifier,
-						&UInt64Type{},
+						UInt64Type,
 						accountTypeStorageCapacityFieldDocString,
 					)
 				},
